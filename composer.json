@@ -1,0 +1,44 @@
+{
+    "name": "kareemaladawy/stripe-connect-toolkit",
+    "description": "Framework-level Stripe Connect (Express) onboarding, payments, transfers and webhook-sync services for Laravel apps, decoupled from any app's domain models via contracts.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kareem Aladawy",
+            "homepage": "https://github.com/kareemaladawy"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "stripe/stripe-php": "^17.4",
+        "giggsey/libphonenumber-for-php": "^8.13",
+        "illuminate/support": "^10.0|^11.0|^12.0",
+        "illuminate/contracts": "^10.0|^11.0|^12.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.0|^9.0|^10.0",
+        "phpunit/phpunit": "^10.0|^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kareemaladawy\\StripeConnectToolkit\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Kareemaladawy\\StripeConnectToolkit\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Kareemaladawy\\StripeConnectToolkit\\StripeConnectToolkitServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "config": {
+        "sort-packages": true
+    }
+}
