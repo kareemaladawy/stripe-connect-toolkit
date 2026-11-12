@@ -38,7 +38,7 @@ STRIPE_PREFERRED_CONNECT_CURRENCY=usd
 
 ## Wiring it up: the three contracts you implement
 
-### 1. `ConnectAccountHoldable` — on whichever model can own a Connect account
+### 1. `ConnectAccountHoldable` - on whichever model can own a Connect account
 
 ```php
 class Agent extends Model implements \Kareemaladawy\StripeConnectToolkit\Contracts\ConnectAccountHoldable
@@ -54,7 +54,7 @@ class Agent extends Model implements \Kareemaladawy\StripeConnectToolkit\Contrac
 
 Implement this on every model type that can own a Connect account.
 
-### 2. `AccountOwnerResolver` — one implementation per app, fanning out to your repositories
+### 2. `AccountOwnerResolver` - one implementation per app, fanning out to your repositories
 
 ```php
 class AppAccountOwnerResolver implements \Kareemaladawy\StripeConnectToolkit\Contracts\AccountOwnerResolver
@@ -80,7 +80,7 @@ class AppAccountOwnerResolver implements \Kareemaladawy\StripeConnectToolkit\Con
 }
 ```
 
-### 3. `ExternalAccountSyncHandler` (optional) — if you sync bank details from `account.external_account.*`
+### 3. `ExternalAccountSyncHandler` (optional) - if you sync bank details from `account.external_account.*`
 
 ```php
 class AppExternalAccountSyncHandler implements \Kareemaladawy\StripeConnectToolkit\Contracts\ExternalAccountSyncHandler
@@ -144,12 +144,12 @@ app(StripeAccountSyncService::class)->handleExternalAccountCreated($event->data-
 ## Notes on what intentionally stayed out
 
 - `createCustomer($hotelAdmin, $hotel)`-style app-specific metadata
-  building — stays in the host app; call
+  building - stays in the host app; call
   `StripePaymentService::createCustomer($name, $email, $metadata)` with
   your own metadata array instead.
 - Caching uses the host app's default cache store (or
-  `STRIPE_TOOLKIT_CACHE_STORE` to pick another) via the `Cache` facade —
+  `STRIPE_TOOLKIT_CACHE_STORE` to pick another) via the `Cache` facade -
   no new caching infrastructure introduced.
-- No currency/money formatting helpers — amounts are always passed as
+- No currency/money formatting helpers - amounts are always passed as
   integer minor units, matching standard Stripe + this app's own money
   column convention.
