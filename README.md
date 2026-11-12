@@ -23,7 +23,6 @@ contracts below, which you implement once per host app.
 ## Install
 
 ```bash
-composer config repositories.stripe-connect-toolkit vcs https://github.com/kareemaladawy/stripe-connect-toolkit
 composer require kareemaladawy/stripe-connect-toolkit
 php artisan vendor:publish --tag=stripe-connect-toolkit-config
 ```
