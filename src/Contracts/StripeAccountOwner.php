@@ -11,8 +11,8 @@ namespace Kareemaladawy\StripeConnectToolkit\Contracts;
  * the personal details Stripe needs to create an account (name, email,
  * phone, dob), while an "owner" is whatever row actually persists the
  * account id and payout/compliance state. In many apps these are the same
- * model; in others — e.g. an agency where an employee completes
- * onboarding but the agency itself owns the Connect account — they are
+ * model; in others - e.g. an agency where an employee completes
+ * onboarding but the agency itself owns the Connect account - they are
  * not, so the toolkit never assumes they're one type.
  */
 interface StripeAccountOwner

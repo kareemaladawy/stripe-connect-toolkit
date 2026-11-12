@@ -9,7 +9,7 @@ class PhoneFormatter
 {
     /**
      * Best-effort conversion of a phone number to E.164. Falls back to the
-     * original string whenever parsing/formatting isn't possible — Stripe
+     * original string whenever parsing/formatting isn't possible - Stripe
      * rejects a malformed phone outright, so passing through lets Stripe's
      * own validation surface the real error rather than this method
      * silently dropping the field.

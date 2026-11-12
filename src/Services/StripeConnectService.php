@@ -15,7 +15,7 @@ use Stripe\CountrySpec;
 
 /**
  * Stripe Connect (Express) account creation and onboarding. Depends only
- * on the ConnectAccountHoldable contract — never on a host app's model
+ * on the ConnectAccountHoldable contract - never on a host app's model
  * classes.
  */
 class StripeConnectService

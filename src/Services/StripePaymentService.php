@@ -9,7 +9,7 @@ use Stripe\PaymentIntent;
 
 /**
  * PaymentIntent / Customer / CustomerSession helpers for platform-direct
- * charges (as opposed to Connect transfers — see StripeTransferService).
+ * charges (as opposed to Connect transfers - see StripeTransferService).
  */
 class StripePaymentService
 {

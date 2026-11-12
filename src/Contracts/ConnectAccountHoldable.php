@@ -4,7 +4,7 @@ namespace Kareemaladawy\StripeConnectToolkit\Contracts;
 
 /**
  * Implemented by whatever model in the host app can own a Stripe Connect
- * (Express) account — e.g. an Agent, a Vendor, a Seller. The toolkit never
+ * (Express) account - e.g. an Agent, a Vendor, a Seller. The toolkit never
  * depends on the host app's model classes directly; it only asks for this
  * shape.
  */

@@ -7,7 +7,7 @@ namespace Kareemaladawy\StripeConnectToolkit\Contracts;
  * Connect account id. The host app is typically polymorphic here (an
  * account might belong to an Agent, a Vendor, a Company, ...); this
  * contract lets the toolkit stay agnostic of how many owner types exist
- * or how they're stored — the host app's single implementation fans out
+ * or how they're stored - the host app's single implementation fans out
  * to its own repositories internally.
  */
 interface AccountOwnerResolver
