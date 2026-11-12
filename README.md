@@ -1,9 +1,7 @@
 # Stripe Connect Toolkit
 
 Reusable Stripe Connect (Express) onboarding, platform payments, transfers,
-and webhook-driven account sync for Laravel apps — extracted from a
-production app's `StripeService`/`StripeAccountService`, with all
-app-specific model/repository coupling replaced by contracts.
+and webhook-driven account sync for Laravel applications
 
 By [Kareem Aladawy](https://github.com/kareemaladawy).
 
@@ -55,8 +53,7 @@ class Agent extends Model implements \Kareemaladawy\StripeConnectToolkit\Contrac
 }
 ```
 
-Implement this on every model type that can own a Connect account (e.g.
-`Agent`, `Agency`, `AgencyEmployee` in kareemaladawy-backend).
+Implement this on every model type that can own a Connect account.
 
 ### 2. `AccountOwnerResolver` — one implementation per app, fanning out to your repositories
 
