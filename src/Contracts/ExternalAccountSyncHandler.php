@@ -13,7 +13,7 @@ use Kareemaladawy\StripeConnectToolkit\DTOs\ExternalAccountData;
  */
 interface ExternalAccountSyncHandler
 {
-    public function created(ConnectAccountHoldable $owner, ExternalAccountData $data): void;
+    public function created(StripeAccountOwner $owner, ExternalAccountData $data): void;
 
     public function updated(ExternalAccountData $data): void;
 

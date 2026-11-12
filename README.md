@@ -36,9 +36,20 @@ STRIPE_DEFAULT_CURRENCY=usd
 STRIPE_PREFERRED_CONNECT_CURRENCY=usd
 ```
 
-## Wiring it up: the three contracts you implement
+## Wiring it up: the contracts you implement
 
-### 1. `ConnectAccountHoldable` - on whichever model can own a Connect account
+There are two distinct roles, deliberately kept separate — in some apps
+the same model plays both, in others (e.g. an agency where an employee
+onboards but the agency itself owns the Connect account) they don't:
+
+- **`ConnectAccountHoldable`** — supplies the personal details Stripe needs
+  to *create* an account (name, email, phone, dob, country). Implement
+  this on whichever model(s) a human fills out onboarding as.
+- **`StripeAccountOwner`** — a marker interface for whichever model
+  actually *persists* the `stripe_account_id` and receives webhook-driven
+  field updates. Implement this on whichever model(s) store that column.
+
+### 1. `ConnectAccountHoldable`
 
 ```php
 class Agent extends Model implements \Kareemaladawy\StripeConnectToolkit\Contracts\ConnectAccountHoldable
@@ -52,9 +63,14 @@ class Agent extends Model implements \Kareemaladawy\StripeConnectToolkit\Contrac
 }
 ```
 
-Implement this on every model type that can own a Connect account.
+### 2. `StripeAccountOwner`
 
-### 2. `AccountOwnerResolver` - one implementation per app, fanning out to your repositories
+```php
+class Agent extends Model implements \Kareemaladawy\StripeConnectToolkit\Contracts\StripeAccountOwner {}
+class Agency extends Model implements \Kareemaladawy\StripeConnectToolkit\Contracts\StripeAccountOwner {}
+```
+
+### 3. `AccountOwnerResolver` — one implementation per app, fanning out to your repositories
 
 ```php
 class AppAccountOwnerResolver implements \Kareemaladawy\StripeConnectToolkit\Contracts\AccountOwnerResolver
@@ -64,13 +80,13 @@ class AppAccountOwnerResolver implements \Kareemaladawy\StripeConnectToolkit\Con
         private AgencyRepository $agencies,
     ) {}
 
-    public function findByStripeAccountId(string $stripeAccountId): ?ConnectAccountHoldable
+    public function findByStripeAccountId(string $stripeAccountId): ?StripeAccountOwner
     {
         return $this->agents->findFirst(['stripe_account_id' => $stripeAccountId])
             ?? $this->agencies->findFirst(['stripe_account_id' => $stripeAccountId]);
     }
 
-    public function updateStripeFields(ConnectAccountHoldable $owner, array $fields): void
+    public function updateStripeFields(StripeAccountOwner $owner, array $fields): void
     {
         match (get_class($owner)) {
             Agent::class => $this->agents->update($owner, $fields),
@@ -80,7 +96,7 @@ class AppAccountOwnerResolver implements \Kareemaladawy\StripeConnectToolkit\Con
 }
 ```
 
-### 3. `ExternalAccountSyncHandler` (optional) - if you sync bank details from `account.external_account.*`
+### 4. `ExternalAccountSyncHandler` (optional) — if you sync bank details from `account.external_account.*`
 
 ```php
 class AppExternalAccountSyncHandler implements \Kareemaladawy\StripeConnectToolkit\Contracts\ExternalAccountSyncHandler
@@ -90,7 +106,7 @@ class AppExternalAccountSyncHandler implements \Kareemaladawy\StripeConnectToolk
         private CountryRepository $countries,
     ) {}
 
-    public function created(ConnectAccountHoldable $owner, ExternalAccountData $data): void
+    public function created(StripeAccountOwner $owner, ExternalAccountData $data): void
     {
         $this->bankDetails->create([
             ...$data->toArray(),

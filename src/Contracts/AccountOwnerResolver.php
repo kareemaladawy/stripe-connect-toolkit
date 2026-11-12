@@ -12,10 +12,10 @@ namespace Kareemaladawy\StripeConnectToolkit\Contracts;
  */
 interface AccountOwnerResolver
 {
-    public function findByStripeAccountId(string $stripeAccountId): ?ConnectAccountHoldable;
+    public function findByStripeAccountId(string $stripeAccountId): ?StripeAccountOwner;
 
     /**
      * @param array<string, mixed> $fields Column => value pairs to persist.
      */
-    public function updateStripeFields(ConnectAccountHoldable $owner, array $fields): void;
+    public function updateStripeFields(StripeAccountOwner $owner, array $fields): void;
 }
